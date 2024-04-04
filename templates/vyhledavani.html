@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styly_vyhledavani.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='mls_maly.png') }}" alt="logo" class="logo">
+        </div>
+        <ul class="menu">
+        <li>
+        <button class="zpet" onclick="window.location.href='{{ url_for('index') }}'"><span>Zpět</span></button>
+        </li>
+    </header>
+    <main>
+        <hi>{{ nadpis }}</hi>
+        <ul>
+            {% for i in seznam %}
+            <li><span>{{ i.nazev_restaurace or i.typ_restaurace}}</span>
+
+                    {% if nadpis == 'Restaurace' %}
+                        <a href="{{ url_for('zobraz_menu', id_restaurace = i.id_restaurace, z_vyhledavani=True )}}">Zobrazit menu</a>
+                    {% else %}
+                    <a href="{{ url_for('moje_restaurace', typ_restaurace = i.typ_restaurace) }}"> Zobrazit restaurace </a>
+                    {% endif %}
+                
+           
+           
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <ul>
+          <h4>Odkazy:</h4>
+          <li><a href="#">O nás</a></li> 
+          <li><a href="#">Kontakty</a></li>
+        </ul>
+       <ul>
+          <h4>Najděte nás:</h4>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+       
+      </footer>
+</body>
+
+
+</html>

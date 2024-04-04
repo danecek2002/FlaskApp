@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styly_menu.css')}}">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <title> {{ restaurace.nazev_restaurace}}</title>
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='mls_maly.png') }}" alt="logo" class="logo">
+            </div>
+            
+            <ul class="menu">
+                <li>
+                    <button class="zpet" onclick="window.location.href='{% if z_vyhledavani %}{{ url_for('vyhledavani', typ='restaurace') }}{% else %}{{ url_for('index') }}{% endif %}'"><span>Zpět</span></button>
+                </li>
+            </ul>
+            
+        </header>
+        <h1>
+            {{ restaurace.nazev_restaurace}}
+        </h1>
+        <main>
+            <div class="nabidka">
+                {% for polozka in polozky %}
+                    <div class="polozka">
+                        <p>{{ polozka.nazev }}</p>
+                        <p>Cena: {{ polozka.cena }} Kc</p>
+                        <p>Popis: {{ polozka.popis }}</p>
+                        <form method="post" action="{{ url_for('pridat_do_kosiku') }}">
+                            <input type="hidden" name="id_polozky" value="{{ polozka.id_polozky }}">
+                            <button type="submit" class="kosik">Přidat do košíku</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </main>
+        <footer>
+            <ul>
+                <h4>Odkazy:</h4>
+                <li><a href="#">O nás</a></li> 
+                <li><a href="#">Kontakty</a></li>
+            </ul>
+            <ul>
+                <h4>Najděte nás:</h4>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_pro_registraci.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Přihlášení</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='mls_maly.png') }}" alt="logo" class="logo">
+        </div>
+        <ul class="menu">
+            <li>
+                <button class="zpet" onclick="window.location.href='{{ url_for('index') }}'"><span>Zpět</span></button>
+            </li>
+        </ul>
+    </header>
+    <section>
+        <h1>Přihlášení</h1>
+        <strong>
+            {% if chybny_udaj %}
+            <p class="chybny_udaj">{{ chybny_udaj }}</p>
+            {% endif %}
+        </strong>
+        <form method="POST" action="/prihlaseni">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="heslo">Heslo:</label>
+            <input type="password" id="heslo" name="heslo" required><br>
+
+            <button class="registrace" type="submit">Přihlásit se</button>
+        </form>
+    </section>
+    <footer>
+        <ul>
+            <h4>Odkazy:</h4>
+            <li><a href="#">O nás</a></li> 
+            <li><a href="#">Kontakty</a></li>
+        </ul>
+        <ul>
+            <h4>Najděte nás:</h4>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </footer>
+</body>
+</html>

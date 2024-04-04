@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_pro_registraci.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Registrace</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='mls_maly.png') }}" alt="logo" class="logo">
+        </div>
+        <ul class="menu">
+        <li>
+        <button class="zpet" onclick="window.location.href='{{ url_for('index') }}'"><span>Zpět</span></button>
+        </li>
+    </header>
+<section>
+  <h1>Registrace</h1>
+  <form method="POST" action="/registrace">
+    <label for="jmeno">Jméno:</label>
+    <input type="text" id="jmeno" name="jmeno" required><br>
+
+    <label for="prijmeni">Příjmení:</label>
+    <input type="text" id="prijmeni" name="prijmeni" required><br>
+
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="adresa">Adresa:</label>
+    <input type="text" id="adresa" name="adresa" required><br>
+
+    <label for="heslo">Heslo:</label>
+    <input type="password" id="heslo" name="heslo" required><br>
+
+    <label for="tel_cislo">Tel. číslo:</label>
+    <input type="tel" id="tel_cislo" name="tel_cislo" required><br>
+
+    <button class="registrace" type="submit">Registrovat se</button>
+  </form>
+</section>
+  <footer>
+    <ul>
+      <h4>Odkazy:</h4>
+      <li><a href="#">O nás</a></li> 
+      <li><a href="#">Kontakty</a></li>
+    </ul>
+   <ul>
+      <h4>Najděte nás:</h4>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+   
+  </footer>
+</body>
+</html>

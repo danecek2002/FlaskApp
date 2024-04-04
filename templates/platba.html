@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_platba.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Platba</title>
+</head>
+<body>
+    <h1>Platba</h1>
+    <p>Celková částka k zaplacení: {{ celkova_castka }} Kč</p>
+    
+    <form method="post" action="{{ url_for('platba') }}">
+        <label for="cislo_uctu">Číslo účtu:</label>
+        <input type="text" id="cislo_uctu" name="cislo_uctu" required>
+        <input type="hidden" name="id_objednavky" value="{{ id_objednavky }}">
+        <input type="hidden" name="celkova_castka" value="{{ celkova_castka }}">
+        <button type="submit">Potvrdit platbu</button>
+    </form>
+</body>
+</html>

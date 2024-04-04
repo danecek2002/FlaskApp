@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_kosik.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Košík</title>
+</head>
+<body>
+    <h1>Košík</h1>
+
+    {% if kosik %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Název</th>
+                    <th>Cena</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for polozka in kosik %}
+                    <tr>
+                        <td>{{ polozka.nazev }}</td>
+                        <td>{{ polozka.cena }}</td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <form action="{{ url_for('objednat') }}" method="post">
+            <button type="submit">Objednat</button>
+        </form>
+        
+    {% else %}
+        <p>Ve vašem košíku nejsou žádné položky.</p>
+    {% endif %}
+</body>
+</html>

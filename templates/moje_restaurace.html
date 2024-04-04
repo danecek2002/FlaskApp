@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_pro_registraci.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+    <title>Restaurace</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='mls_maly.png') }}" alt="logo" class="logo">
+        </div>
+        <ul class="menu">
+            <li>
+                <button class="zpet" onclick="window.location.href='{{ url_for('index') }}'"><span>Zpět</span></button>
+            </li>
+        </ul>
+    </header>
+    <div class="restaurace-list">
+        {% for restaurace in restaurace_ve_kategorie %}
+            <div class="restaurace-item">
+                <h3>Nazev: {{ restaurace.nazev_restaurace }}</h3>
+                <p>Adresa: {{ restaurace.adresa }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <footer>
+        <ul>
+            <h4>Odkazy:</h4>
+            <li><a href="#">O nás</a></li> 
+            <li><a href="#">Kontakty</a></li>
+        </ul>
+        <ul>
+            <h4>Najděte nás:</h4>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </footer>
+      
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styly.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Document</title>
+    <script>
+      window.onload = function() {
+  document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.menu').classList.toggle('show');
+  });
+};
+    </script>
+</head>
+
+<body>
+
+ <header>
+    
+   <div class="menu-toggle">☰</div>
+   <ul class="menu">
+    {% if uzivatel_prihlasen %}
+    {% if je_admin %}
+    <li>
+      <button class="buttonAdmin">
+        <a href="/admin_panel">
+          <span>Administrace</span>
+        </a>
+      </button>
+    </li>
+    {% endif %}
+    <li>
+      <button class="buttonOdhlasit"><a href="/odhlaseni"><span>Odhlásit se</span></a></button>
+    </li>
+    <li>
+      <button class="buttonKosik"><a href="/kosik"><span>Kosik</span></a></button>
+    </li>
+    {% else %}
+    <li>
+        <button class="buttonPrihlasit"><a href="/prihlaseni"><span>Přihlásit se</span></a></button>
+    </li>
+    <li>
+        <button class="buttonRegistrace"><a href="/registrace"><span>Registrace</span></a></button>
+    </li>
+    {% endif %}
+</ul>
+ </header>
+<div class="jmeno">
+  {% if uzivatel_prihlasen %}
+   Vítej uživateli, {{ session['jmeno'] }} {{session['prijmeni']}} !
+
+{% endif %}
+</div>
+<img src="{{ url_for('static', filename='mls.png') }}" alt="logo" class="logo">
+<main> 
+    <div class="half-width">
+      <div class="search"> 
+      </div> 
+        <h1>MlsMls</h1>
+        <h2 class="left">Najděte nejlepší restaurace ve vašem okolí</h2>
+        <p>Vyhledáváte to nejlepší gastronomické zážitky v okolí?
+          Nemusíte hledat dál! Vítejte na naší stránce, kde vás čeká nezapomenutelná cesta po chuťových dobrodružstvích.
+          Už se nemusíte trápit hledáním - máme pro vás tu nejlepší restauraci v okolí.</p>
+      </div>
+</main> 
+
+ <section>
+    <h3>Kategorie</h3>
+    <ul>
+      {% for kategorie in seznam_kategorii %}
+        <li>
+          <img src="{{ obrazky_kategorii[kategorie.typ_restaurace] }}" alt="Kategorie obrazek ">
+          <span>{{ kategorie.typ_restaurace }}</span>
+          <a href="{{ url_for('moje_restaurace', typ_restaurace=kategorie.typ_restaurace) }}">Zobrazit restaurace</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="center-button">
+      <button class="buttonZobrazitVse"><a href="{{ url_for('vyhledavani', typ='kategorie')}}"><span>Zobrazit více</span></a></button>
+    </div>
+ </section>
+
+ <section> 
+   <h3>Restaurace</h3> 
+   <ul> 
+    {% for restaurace in seznam_restauraci %}
+     <li><img src="{{ obrazky_restauraci[restaurace.nazev_restaurace]}}"><span>{{ restaurace.nazev_restaurace }}</span><a href="{{ url_for('zobraz_menu', id_restaurace=restaurace.id_restaurace)}}">Zobrazit menu</a>
+    </li>
+    
+    {% endfor %} 
+   </ul>
+   <div class="center-button">
+    <button class="buttonZobrazitVse"><a href="{{ url_for('vyhledavani', typ='restaurace')}}"><span>Zobrazit více</span></a></button>
+  </div>
+
+ </section> 
+
+ {% if je_poslicek %}
+<div class="sloupcekontejner">
+  <div class="sloupec">
+    <h2>Objednávky k vyřízení</h2>
+  {% for objednavka in vyrizeny_objednavky if objednavka['stav'] == 'Vyřízena' %}
+  <div class="kontejner">
+    <div class="objednavka">
+        <p><strong>Datum objednávky:</strong> {{ objednavka['datum_objednani'] }}</p>
+        <p><strong>Adresa doručení:</strong> {{ objednavka['adresa'] }}</p>
+        <p><strong>Stav objednávky:</strong> {{ objednavka['stav'] }}</p>
+        <p><strong>Popis položek:</strong></p>
+        <ul>
+          {% for polozka in objednavka['polozky'] %}
+            <li>{{ polozka['nazev'] }} - {{ polozka['popis'] }}</li>
+          {% endfor %}
+        </ul>
+        <form action="{{ url_for('prijmout_objednavku', id_objednavky=objednavka.id_objednavky) }}" method="post">
+          <label for="cas_doruceni">Nastavit čas doručení:</label>
+          <input type="datetime-local" id="cas_doruceni" name="cas_doruceni" required><br>
+          <button class="prijem" type="submit">Přijmout objednávku</button>
+        </form>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  <div class="sloupec">
+    <h2>Objednávky s potvrzením doručení</h2>
+        {% for objednavka in vyrizeny_objednavky if objednavka['stav'] == 'doručuje se' %}
+        <div class="kontejner">
+          <div class="objednavka">
+            <p><strong>Datum objednávky:</strong> {{ objednavka['datum_objednani'] }}</p>
+            <p><strong>Adresa doručení:</strong> {{ objednavka['adresa'] }}</p>
+            <p><strong>Stav objednávky:</strong> {{ objednavka['stav'] }}</p>
+            <p><strong>Popis položek:</strong></p>
+            <ul>
+              {% for polozka in objednavka['polozky'] %}
+                <li>{{ polozka['nazev'] }} - {{ polozka['popis'] }}</li>
+              {% endfor %}
+            </ul>
+        <form action="{{ url_for('potvrdit_doruceni', id_objednavky=objednavka.id_objednavky) }}" method="post">
+          <button class="potvrdit" type="submit">Potvrdit doručení</button>
+        </form>
+        
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+ <footer>
+    <ul>
+      <h4>Odkazy:</h4>
+      <li><a href="#">O nás</a></li> 
+      <li><a href="#">Kontakty</a></li>
+    </ul>
+   <ul>
+      <h4>Najděte nás:</h4>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+   
+  </footer>
+</body>
+</html>

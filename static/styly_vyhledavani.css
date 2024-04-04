@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif; /* Přidáno 'sans-serif' jako záložní písmo */
+}
+
+body {
+  background-color: #BBB6A5;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  color: black;
+  flex-direction: column;
+  align-items: center;
+}
+main {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+  color: white;
+}
+
+main ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+main li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  padding: 10px;
+  background-color: #2A2F33;
+  border-radius: 5px;
+}
+main li a {
+  background-color: #2A2F33;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+main li a:hover {
+  background-color: red;
+}
+.logo {
+  width: 50px;
+  height: auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  height: 50px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.zpet {
+  border-radius: 5px;
+  background-color: #2A2F33;
+  color: white;
+  width: 100px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Přidán přechod pro plynulejší efekt přejetí myší */
+}
+
+.zpet:hover {
+  background-color: #cc0000;
+}
+
+.menu {
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+}
+
+.menu li {
+  padding: 10px 20px;
+  color: white;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+footer {
+  background-color: #cccccc;
+  margin-top: 30px;
+  padding: 20px;
+  display: flex;
+  justify-content:space-around;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+}
+
+footer ul {
+  list-style: none;
+  text-align: center;
+}
+
+footer ul li a {
+  color: black;
+}
+
+footer ul h4 {
+  font-weight: bold;
+}
+
+
+@media only screen and (max-width: 768px) {
+  header, main, footer {
+    padding: 10px;
+  }
+  .menu li {
+    padding: 5px 10px;
+  }
+  .zpet {
+    width: 80px;
+    height: 24px;
+  }
+  main li {
+    flex-direction: column;
+  }
+
+  main li a {
+    margin-top: 10px;
+  }
+}

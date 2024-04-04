@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styl_admin_panel.css') }}">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <title>Administrátorský panel</title>
+</head>
+<body>
+    <header>
+        <h1>Administrátorský panel</h1>
+    </header>
+    <div class="zpetNaIndex">
+        <span>
+        <a href="{{ url_for('index') }}">Zpět na index</a>
+        </span>
+    </div>
+    
+    <main>
+        <section class="restaurace">
+            <h2>Seznam restaurací</h2>
+            <ul>
+                {% for restaurace in data %}
+                    <li>
+                        <strong>{{ restaurace.nazev_restaurace }}</strong>
+                        <form method="post" action="{{ url_for('smazat_restauraci') }}">
+                            <input type="hidden" name="nazev_restaurace" value="{{ restaurace.nazev_restaurace }}">
+                            <button type="submit" action ="/smazat_restauraci">Smazat</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form method="get" action="/pridat_restauraci">
+                <button type="submit">Přidat restauraci</button>
+            </form>
+            
+        </section>
+        <section class="uzivatele">
+            <h2>Seznam uživatelů</h2>
+            <ul>
+                {% for uzivatel in dataUzivatele %}
+                    <li>
+                        <strong>{{ uzivatel.id_uzivatele }}</strong>
+                        <strong>{{ uzivatel.jmeno }}</strong>
+                        <strong>{{ uzivatel.prijmeni }}</strong>
+                        <form method="post" action="{{ url_for('zmenit_role', id_uzivatele=uzivatel.id_uzivatele) }}">
+                            <label>
+                                <input type="checkbox" name="role[]" value="1" {% if uzivatel.role is defined and 1 in uzivatel.role %}checked{% endif %}>
+                                Admin
+                            </label>
+                            <label>
+                                <input type="checkbox" name="role[]" value="2" {% if uzivatel.role is defined and 2 in uzivatel.role %}checked{% endif %}>
+                                Klient
+                            </label>
+                            <label>
+                                <input type="checkbox" name="role[]" value="3" {% if uzivatel.role is defined and 3 in uzivatel.role %}checked{% endif %}>
+                                Poslíček
+                            </label><br>
+                            <button type="submit">Uložit</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
